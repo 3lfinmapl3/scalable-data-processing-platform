@@ -2,7 +2,7 @@
 
 
 
-> **NOTE** : This file consists off all the design and architectural decisions taken while coding this project. This document will act as a supporting medium for why certain design, change of design or technology was used and leaves not stones unturned.
+> **NOTE** : This file consists off all the design and architectural decisions taken while coding this project. This document will act as a supporting medium for why certain design, change of design or       technology was used and leaves not stones unturned.
 
 
 
@@ -10,7 +10,7 @@
 
  
 
- 	**Rationale** : Uploading files are user facing, time sensitive and short lived while Processing those files are a long-running resource intensive process. Separating these services would allow users to upload files to the system independent of the processing service.
+ 	**Rationale** : Uploading files are user facing, time sensitive and short lived while Processing those files are a long-running resource intensive process. Separating these services would allow users to upload                   files to the system independent of the processing service.
 
  
 
@@ -42,7 +42,7 @@
 
 
 
- 	**Rationale** : PostgreSQL offers strong *transactional guarantees*, mature indexing capabilities, and reliable support for complex queries as well as batch inserts which are essential for consistent data ingestion.
+ 	**Rationale** : PostgreSQL offers strong *transactional guarantees*, mature indexing capabilities, and reliable support for complex queries as well as batch inserts which are essential for consistent data                        ingestion.
 
 
 
@@ -58,7 +58,7 @@
 
 
 
- 	**Rationale** : Local storage simplifies file storage and helps focus learning on file processing than cloud infrastructure. The storage layer is abstracted to allow future migrations to object storage (e.g. S3).
+ 	**Rationale** : Local storage simplifies file storage and helps focus learning on file processing than cloud infrastructure. The storage layer is abstracted to allow future migrations to object storage (e.g.                     S3).
 
 
 
@@ -68,11 +68,7 @@
 
  	**Trade-offs** : Files not shared across nodes, and are not suitable for horizontal scaling.
 
- 
-
- 	---
-
-
+ ---
 
 5. **Chunk-Oriented processing** : Process file in fixed-size chunk rather than loading entire file into memory.
 
@@ -113,6 +109,5 @@
  	**Rationale** : Not including extra features help us focus on core processing reliability and correctness
 
  
-
- ---
+---
 
