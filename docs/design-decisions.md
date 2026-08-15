@@ -111,3 +111,22 @@
  
 ---
 
+7. **Spring Boot Application** : To make use of Spring Framework and bundled tools to not only save time writing repetitive boiler plate code for redundant tasks but also to help focus better on project logic.
+
+---
+
+8. **HikariCP** : Connection pool auto-configured by spring boot for database connection pool.
+
+---
+
+9. **Introducing Docker** : Initial idea was to install PostgreSQL on my windows host, but that would mean managing, upgrading, removing it individually for this project alone. Instead, Docker would help us keep multiple tools like PostgreSQL or Kafka (in future) and even help deploy upload-service so we have an isolated instance of bundled tools and services together ready for dispatch and/or be removed if wanted.
+
+---
+
+10. **ORM through Hibernate via Spring JPA** : Use Hibernate as the ORM implementation through Spring Data JPA for database persistence.
+
+    **Rationale** : Using Spring Data JPA and Hibernate reduces repetitive database access code and allows the application to work with domain entities rather than manually writing SQL for every CRUD operation. This also integrates naturally with Spring's transaction management and repository abstraction.
+
+    **Alternatives Considered** : JDBC / Spring JDBC
+
+    **Trade-offs** : ORM introduces an abstraction layer over SQL and can hide database-specific behavior. Poorly designed queries or entity relationships can also lead to performance issues such as unnecessary queries.
