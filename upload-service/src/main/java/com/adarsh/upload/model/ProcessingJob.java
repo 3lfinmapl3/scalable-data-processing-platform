@@ -40,4 +40,48 @@ public class ProcessingJob {
 
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
+
+    protected ProcessingJob(){}
+
+    public ProcessingJob(final String filePath){
+        
+        if (filePath == null || filePath.isEmpty()){
+            throw new IllegalArgumentException("File Path cannot be null or empty !");
+        }
+
+        this.filePath = filePath;
+        this.status = JobStatus.CREATED;
+    }
+
+    public UUID getId() {
+        return this.id;
+    }
+
+    public String getFilePath(){
+        return this.filePath;
+    }
+
+    public JobStatus getStatus(){
+        return this.status;
+    }
+
+    public Long getProcessedRecords(){
+        return this.processedRecords;
+    }
+
+    public Long getFailedRecords(){
+        return this.failedRecords;
+    }
+
+    public Long getLastProcessedOffset(){
+        return this.lastProcessedOffset;
+    }
+
+    public Instant getCreatedAt(){
+        return this.createdAt;
+    }
+
+    public Instant getUpdatedAt(){
+        return this.updatedAt;
+    }
 }
