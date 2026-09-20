@@ -3,6 +3,9 @@ package com.adarsh.upload.model;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Table;
@@ -19,9 +22,11 @@ public class ProcessingJob {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     
-    @Column(name = "file_path", nullable = false)
+
+    @Column(name = "file_path", nullable = false, columnDefinition = "TEXT")
     private String filePath;
 
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private JobStatus status;
@@ -83,5 +88,29 @@ public class ProcessingJob {
 
     public Instant getUpdatedAt(){
         return this.updatedAt;
+    }
+
+    public void startProcessing(){
+        if (this.status != JobStatus.CREATED){
+            throw new IllegalStateException("Job can't be processed in this state, current state : "+this.status);
+        }
+
+        this.status = JobStatus.IN_PROGRESS;
+    }
+
+    public void markCompleted(){
+        if (this.status != JobStatus.IN_PROGRESS) {
+            throw new IllegalStateException("Job can't be marked complete in this state, current state : "+this.status);
+        }
+
+        this.status = JobStatus.COMPLETED;
+    }
+
+    public void markFailed(){
+        if (this.status != JobStatus.IN_PROGRESS) {
+            throw new IllegalStateException("Job can't be marked failed in this state, current state : "+this.status);
+        }
+
+        this.status = JobStatus.FAILED;
     }
 }
