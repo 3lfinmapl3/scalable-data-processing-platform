@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.util.UUID;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.StandardCopyOption;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,16 +33,23 @@ public class UploadService {
 
         try {
             Files.createDirectories(uploadDirectory);
+            
             try (InputStream inputStream = file.getInputStream()){
                 Files.copy(inputStream, destination);
             }
 
         } catch(IOException exception){
+
+            try {
+                Files.deleteIfExists(destination);
+            }catch(IOException cleanupException){
+                exception.addSuppressed(cleanupException);
+            }
+
             throw new IllegalStateException("Filed to store upload file",exception);
         }
 
         ProcessingJob job = new ProcessingJob(destination.toString());
-        return job;
-
+        return jobRepository.saveAndFlush(job);
     }
 }

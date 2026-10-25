@@ -6,12 +6,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import com.adarsh.upload.service.UploadService;
+import com.adarsh.upload.model.ProcessingJob;
+import com.adarsh.upload.dto.UploadResponse;
 
 @RestController
 @RequestMapping("/api/v1")
 public class UploadController {
+    private final UploadService uploadService;
+
+    public UploadController(UploadService uploadService){
+        this.uploadService = uploadService;
+    }
+
+
+
+
     @PostMapping("/uploads")
-    public ResponseEntity<String> uploadFile(@RequestParam MultipartFile file){
-        return ResponseEntity.accepted().body("Upload Received !");
+    public ResponseEntity<UploadResponse> uploadFile(@RequestParam MultipartFile file){
+
+        ProcessingJob job = uploadService.upload(file);
+
+        UploadResponse response = new UploadResponse(job.getId(), job.getStatus(), "File Uploaded Successfully");
+
+        return ResponseEntity.accepted().body(response);
     } 
 }
