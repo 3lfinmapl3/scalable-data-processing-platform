@@ -2,7 +2,6 @@ package com.adarsh.processing.repository;
 
 import com.adarsh.processing.model.ProcessingJob;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.UUID;
@@ -10,7 +9,6 @@ import java.util.UUID;
 public interface ProcessingJobRepository
         extends JpaRepository<ProcessingJob, UUID> {
 
-    @Modifying
     @Query(value = """
         WITH next_job AS (
             SELECT id
